@@ -170,32 +170,62 @@ To write the code to create the desired batch file, we will need to convert them
   \hldef{\}}
 \hldef{\}}
 
-\hldef{code.to.process} \hlkwb{=} \hlkwd{paste}\hldef{(json.files,} \hlsng{"streaming_extractor_music.exe"}\hldef{)}
+\hldef{code.to.process} \hlkwb{=} \hlkwd{paste}\hldef{(}\hlsng{"streaming_extractor_music.exe "}\hldef{, json.files)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
 \item Finally, using the \texttt{writeLines()} function, we wrote the file names to a .txt file called batfile.txt.
+
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{writeLines}\hldef{(code.to.process,} \hlsng{"batfile.txt"}\hldef{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 \end{enumerate}
 
+\subsection{Task 2: Process JSON Output}
+After being provided the .JSON output for the song "Au Revoir (Adios)," we analyze it for the key descriptors of \texttt{average\_loudness}, \texttt{mean} of \texttt{spectral\_energy, danceability, bpm, key\_key} (musical key) \texttt{key\_scale} (musical mode), and \texttt{length} (duration in seconds). We do this by installing the \texttt{jsonlite} package for \texttt{R} \citep{}, using \texttt{str\_split} to extract the artist, album, and track from the file name. And finally loading the JSON file into \texttt{R} via \texttt{fromJSON()}, before extracting the key descriptors.
+\begin{knitrout}\scriptsize
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#Step 0}
+\hlkwd{library}\hldef{(jsonlite)}
 
+\hlcom{#Step 1}
+\hldef{json.file} \hlkwb{=} \hldef{(}\hlkwd{list.files}\hldef{())[}\hlnum{8}\hldef{]}
+\hlcom{#gives us the file we want. In the future, we can just loop through the .json}
+\hlcom{#files that we have in a list or folder}
+\hldef{split.file} \hlkwb{=} \hlkwd{str_split}\hldef{(json.file,} \hlsng{"-"}\hldef{,} \hlkwc{simplify} \hldef{=} \hlnum{TRUE}\hldef{)}
+\hldef{artist.name} \hlkwb{=} \hldef{split.file[}\hlnum{1}\hldef{,} \hlnum{1}\hldef{]}
+\hldef{album} \hlkwb{=} \hldef{split.file[}\hlnum{1}\hldef{,} \hlnum{2}\hldef{]}
+\hldef{song.name} \hlkwb{=} \hldef{split.file[}\hlnum{1}\hldef{,} \hlnum{3}\hldef{]} \hlcom{#this still has .json on it}
+\hldef{song.name} \hlkwb{=} \hlkwd{str_split}\hldef{(song.name,} \hlsng{".json"}\hldef{,} \hlkwc{simplify} \hldef{=} \hlnum{TRUE}\hldef{)[}\hlnum{1}\hldef{,}\hlnum{1}\hldef{]}
 
+\hlcom{#Step 2}
+\hldef{json.data} \hlkwb{=} \hlkwd{fromJSON}\hldef{(json.file)}
 
-Describe the data you are working with, if applicable. Describe the specific process you will follow to answer the question at hand. It should provide a clear and concise narrative that flows from the problem specification in the Introduction to how you will approach answering it. This is where I would expect to see some citations for \texttt{R} packages you will use to conduct the statistical analysis reported in the Results section.
-
+\hlcom{#Step 3}
+\hldef{average.loudness} \hlkwb{=} \hldef{json.data}\hlopt{$}\hldef{lowlevel}\hlopt{$}\hldef{average_loudness}
+\hldef{mean.spectral.enrgy} \hlkwb{=} \hldef{json.data}\hlopt{$}\hldef{lowlevel}\hlopt{$}\hldef{spectral_energy}\hlopt{$}\hldef{mean}
+\hldef{danceability} \hlkwb{=} \hldef{json.data}\hlopt{$}\hldef{rhythm}\hlopt{$}\hldef{danceability}
+\hldef{bpm} \hlkwb{=} \hldef{json.data}\hlopt{$}\hldef{rhythm}\hlopt{$}\hldef{bpm}
+\hldef{musical.key} \hlkwb{=} \hldef{json.data}\hlopt{$}\hldef{tonal}\hlopt{$}\hldef{key_key}
+\hldef{musical.mode} \hlkwb{=} \hldef{json.data}\hlopt{$}\hldef{tonal}\hlopt{$}\hldef{key_scale}
+\hlcom{#duration = json.data ####in seconds, cant find in file}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
 
 \section{Results}
-Tie together the Introduction -- where you introduce the problem at hand -- and the methods --  what you propose to do to answer the question. Present your data, the results of your analyses, and how each reported aspect contributes to answering the question. This section should include table(s), statistic(s), and graphical displays. Make sure to put the results in a sensible order and that each result contributes a logical and developed solution. It should not just be a list. Avoid being repetitive. 
-
-\subsection{Results Subsection}
-Subsections can be helpful for the Results section, too. This can be particularly helpful if you have different questions to answer. 
+To answer our question of which band contributed most to a song, we need to be able to analyze the data of the song to see what it "sounds like." Following this lab, we will be using Essentia to do this. Via our creation of the batch file and processing the .JSON output, we now have the code to turn other songs into Essentia ready file commands. For the already processed song "Au Revoir (Adios)", we now can examine key descriptors of it. 
 
 
 \section{Discussion}
- You should objectively evaluate the evidence you found in the data. Do not embellish or wish-terpet (my made-up phase for making an interpretation you, or the researcher, wants to be true without the data \emph{actually} supporting it). Connect your findings to the existing information you provided in the Introduction.
-
-Finally, provide some concluding remarks that tie together the entire paper. Think of the last part of the results as abstract-like. Tell the reader what they just consumed -- what's the takeaway message?
+In this Lab, we laid the ground work for analyzing many more songs, as now we have the code to process them into .json files to be output and analyzed for key descriptors.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
@@ -210,13 +240,6 @@ you cite them in your document, the bibliography section will automatically popu
 \end{tiny}
 \end{multicols}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Appendix
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\onecolumn
-\section{Appendix}
 
-If you have anything extra, you can add it here in the appendix. This can include images or tables that don't work well in the two-page setup, code snippets you might want to share, etc.
 
 \end{document}

@@ -55,7 +55,7 @@ print(json.files)
 
 ?writeLines()
 #3d
-code.to.process = paste(json.files, "streaming_extractor_music.exe")
+code.to.process = paste("streaming_extractor_music.exe ", json.files)
 print(code.to.process)
 
 writeLines(code.to.process, "batfile.txt")
@@ -88,3 +88,4 @@ bpm = json.data$rhythm$bpm
 musical.key = json.data$tonal$key_key
 musical.mode = json.data$tonal$key_scale
 #duration = json.data ####in seconds, cant find right now.
+
