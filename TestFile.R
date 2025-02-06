@@ -10,11 +10,8 @@
 library(stringr)
 
 #Step 1
-?str_split_i
 music.dirs <- list.dirs("MUSIC")
-#Test
-#curr.album = music.dirs[3]
-#dir.level.test = str_count(curr.album, pattern = "/")
+
 #Step 2
 artist.dirs = c()
 album.dirs = c()
@@ -28,17 +25,9 @@ for (directory in music.dirs){
   }
 }
 
-print(artist.dirs)
-print(album.dirs)
-
 #Step 3
-#Test
-album.dirs[1]
-test = str_split(album.dirs[1], pattern = "/", simplify = TRUE)
-print(test)
-print(test[1,2])
+
 ##3.1-3.2
-#wav.files.total = list()
 json.files = c()
 for (album in album.dirs){
   ###Splits the string of the directory into Music, Artist, Album
@@ -64,14 +53,16 @@ for (album in album.dirs){
 }
 print(json.files)
 
+?writeLines()
 #3d
 code.to.process = paste(json.files, "streaming_extractor_music.exe")
 print(code.to.process)
 
-
+writeLines(code.to.process, "batfile.txt")
 ###############################################
 #Task 2: Process JSON Output
 ###############################################
+
 
 #Step 0
 library(jsonlite)
