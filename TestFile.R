@@ -89,3 +89,4 @@ musical.key = json.data$tonal$key_key
 musical.mode = json.data$tonal$key_scale
 #duration = json.data ####in seconds, cant find right now.
 
+citation(stringr)

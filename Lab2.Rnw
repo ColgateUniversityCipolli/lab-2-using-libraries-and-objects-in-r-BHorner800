@@ -45,7 +45,7 @@
 \noindent \textbf{Keywords:} Batch File, Data Processing, Music, JSON
 
 \section{Introduction}
-In 2018, two of Professor Cipolli's favorite bands - The Front Bottoms and Manchester Orchestra - released a song they collaborated on called Allen Town. In a statement to Noisey \citep{} -  the music arm of Vice - Andy Hull of Manchester Orchestra recalled that the creation of this track started when Nate Hussey of All Get Out sent him the first four lines of the track. Andy Hull worked out the melody and music and shared it with Brian Sella of The Front Bottoms, who then helped develop the chorus.
+In 2018, two of Professor Cipolli's favorite bands - The Front Bottoms and Manchester Orchestra - released a song they collaborated on called Allen Town. In a statement to Noisey -  the music arm of Vice - Andy Hull of Manchester Orchestra recalled that the creation of this track started when Nate Hussey of All Get Out sent him the first four lines of the track. Andy Hull worked out the melody and music and shared it with Brian Sella of The Front Bottoms, who then helped develop the chorus.
 
 \textbf{This brings us to an interesting question:} which band contributed most to the song?
  
@@ -63,7 +63,7 @@ We divide our overall goal in to two tasks. \textbf{Task 1}, where we build the 
 To write the code to create the desired batch file, we will need to convert them from the format of \texttt{[track number]-[artist]-[track name].wav} to \texttt{[artist name]-[album name]-[track name].json}. 
 
 \begin{enumerate}[1.]\itemsep0em
-\item First, we install the \texttt{stringr} package for \texttt{R} \citep{}. We will be using it to split the file name apart to isolate the artist and album and to change the file to \texttt{.json}. 
+\item First, we install the \texttt{stringr} package for \texttt{R} \citep{stringr}. We will be using it to split the file name apart to isolate the artist and album and to change the file to \texttt{.json}. 
 <<eval = FALSE, size="scriptsize", warning=FALSE, message=FALSE>>=
 library(stringr)
 @
@@ -121,7 +121,7 @@ writeLines(code.to.process, "batfile.txt")
 \end{enumerate}
 
 \subsection{Task 2: Process JSON Output}
-After being provided the .JSON output for the song "Au Revoir (Adios)," we analyze it for the key descriptors of \texttt{average\_loudness}, \texttt{mean} of \texttt{spectral\_energy, danceability, bpm, key\_key} (musical key) \texttt{key\_scale} (musical mode), and \texttt{length} (duration in seconds). We do this by installing the \texttt{jsonlite} package for \texttt{R} \citep{}, using \texttt{str\_split} to extract the artist, album, and track from the file name. And finally loading the JSON file into \texttt{R} via \texttt{fromJSON()}, before extracting the key descriptors.
+After being provided the .JSON output for the song "Au Revoir (Adios)," we analyze it for the key descriptors of \texttt{average\_loudness}, \texttt{mean} of \texttt{spectral\_energy, danceability, bpm, key\_key} (musical key) \texttt{key\_scale} (musical mode), and \texttt{length} (duration in seconds). We do this by installing the \texttt{jsonlite} package for \texttt{R} \citep{jsonlite}, using \texttt{str\_split} to extract the artist, album, and track from the file name. And finally loading the JSON file into \texttt{R} via \texttt{fromJSON()}, before extracting the key descriptors.
 <<eval = FALSE, size="scriptsize", warning=FALSE, message=FALSE>>=
 #Step 0
 library(jsonlite)
@@ -162,8 +162,6 @@ In this Lab, we laid the ground work for analyzing many more songs, as now we ha
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \vspace{2em}
 
-\noindent\textbf{Bibliography:} Note that when you add citations to your bib.bib file \emph{and}
-you cite them in your document, the bibliography section will automatically populate here.
 
 \begin{tiny}
 \bibliography{bib}
